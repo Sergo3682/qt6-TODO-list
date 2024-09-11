@@ -5,10 +5,11 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , model(new TasksModel)
 {
     ui->setupUi(this);
-    model = new TasksModel;
     ui->tasksTableView->setModel(model);
+    ui->tasksTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 MainWindow::~MainWindow()

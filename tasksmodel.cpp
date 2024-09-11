@@ -20,6 +20,11 @@ QVariant TasksModel::data(const QModelIndex &index, int role) const
     {
         return "beer";
     }
+
+    if (role == Qt::TextAlignmentRole && index.column() != COLUMNS_NUMBER - 1) //all columns exept the last one
+    {
+        return Qt::AlignCenter;
+    }
     return QVariant();
 }
 
