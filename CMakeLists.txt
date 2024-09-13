@@ -42,6 +42,7 @@ else()
             ${PROJECT_SOURCES}
             taskeditdialog.ui
             tasksmodel.h tasksmodel.cpp
+            task.h
         )
     endif()
 endif()

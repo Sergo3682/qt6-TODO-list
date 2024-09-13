@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QList>
+#include "task.h"
 #define COLUMNS_NUMBER 4
 
 class TasksModel : public QAbstractTableModel
@@ -16,7 +17,9 @@ public:
 
 private:
     const QList<QString> columnHeaders = { "State", "Name", "Date", "Description" };
-    int rows = 1;
+    QList<Task> tasks;
 };
+
+enum colNames {State, Name, Date, Description};
 
 #endif // TASKSMODEL_H
