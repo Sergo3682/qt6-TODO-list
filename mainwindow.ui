@@ -70,7 +70,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QTableView" name="tasksTableView"/>
+     <widget class="QTableView" name="tasksTableView">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

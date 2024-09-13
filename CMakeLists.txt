@@ -40,9 +40,9 @@ else()
     else()
         add_executable(qt6-TODO-list
             ${PROJECT_SOURCES}
-            taskeditdialog.ui
             tasksmodel.h tasksmodel.cpp
             task.h
+            taskdialog.h taskdialog.cpp taskdialog.ui
         )
     endif()
 endif()
