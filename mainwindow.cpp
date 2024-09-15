@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    model->saveTasksToFile();
     delete model;
     delete addAct;
     delete editAct;
@@ -71,7 +72,6 @@ void MainWindow::on_editActTriggered()
     {
         model->editTask(Dlg.getTaskFromFields());
     }
-    printf("EDITED\n");
 }
 
 void MainWindow::on_addActTriggered()

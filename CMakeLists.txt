@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Xml)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -43,12 +44,15 @@ else()
             tasksmodel.h tasksmodel.cpp
             task.h
             taskdialog.h taskdialog.cpp taskdialog.ui
+            tasks.xml
+            saveloadmanager.h saveloadmanager.cpp
         )
     endif()
 endif()
 
 target_link_libraries(qt6-TODO-list PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(qt6-TODO-list PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(qt6-TODO-list PRIVATE Qt${QT_VERSION_MAJOR}::Xml)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

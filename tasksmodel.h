@@ -4,6 +4,8 @@
 #include <QAbstractTableModel>
 #include <QList>
 #include "task.h"
+#include "saveloadmanager.h"
+
 #define COLUMNS_NUMBER 4
 
 class TasksModel : public QAbstractTableModel
@@ -20,6 +22,8 @@ public:
     void editTask(Task tmpTask);
     Task getSelectedTask();
     void changeState(QModelIndex index);
+    void saveTasksToFile();
+
 
 private:
     const QList<QString> columnHeaders = { "State", "Name", "Date", "Description" };

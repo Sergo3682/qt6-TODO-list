@@ -89,3 +89,9 @@ void TasksModel::changeState(QModelIndex index)
         emit layoutChanged();
     }
 }
+
+void TasksModel::saveTasksToFile()
+{
+    SaveLoadManager Manager;
+    Manager.SaveToFile("./MyTasks.xml", tasks);
+}
