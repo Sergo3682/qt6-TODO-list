@@ -25,12 +25,14 @@ private:
     QAction *addAct, *editAct, *deleteAct;
 
     void initContextMenu();
+    void initToolBar();
 
 private slots:
     void openContextMenu(const QPoint&);
     void on_deleteActTriggered();
     void on_editActTriggered();
     void on_addActTriggered();
+    void on_saveActTriggered();
 
     void on_tasksTableView_clicked(const QModelIndex &index);
 };

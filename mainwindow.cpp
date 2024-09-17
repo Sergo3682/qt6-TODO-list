@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     initContextMenu();
+    initToolBar();
     connect(ui->tasksTableView, &QWidget::customContextMenuRequested,
         this, &MainWindow::openContextMenu);
 
@@ -20,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    model->saveTasksToFile();
     delete model;
     delete addAct;
     delete editAct;
@@ -60,6 +60,11 @@ void MainWindow::initContextMenu()
     contextMenu->addAction(deleteAct);
 }
 
+void MainWindow::initToolBar()
+{
+    connect(ui->actionSave, &QAction::triggered, this, &MainWindow::on_saveActTriggered);
+}
+
 void MainWindow::on_deleteActTriggered()
 {
     model->deleteSelectedTask();
@@ -86,5 +91,10 @@ void MainWindow::on_addActTriggered()
 void MainWindow::on_tasksTableView_clicked(const QModelIndex &index)
 {
     model->changeState(index);
+}
+
+void MainWindow::on_saveActTriggered()
+{
+    model->saveTasksToFile();
 }
 
