@@ -34,6 +34,14 @@ Task TaskDialog::getTaskFromFields()
 
 void TaskDialog::on_buttonBox_accepted()
 {
+    if (ui->nameLineEdit->text().size() == 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Warning (ノ ゜Д゜)ノ ︵ ┻━┻");
+        msgBox.setText("Name field cannot be empty!!!");
+        msgBox.exec();
+        return;
+    }
     accept();
 }
 

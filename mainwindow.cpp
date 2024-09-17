@@ -15,7 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->tasksTableView, &QWidget::customContextMenuRequested,
         this, &MainWindow::openContextMenu);
 
+    model->loadTasksFromFile();
+
     ui->tasksTableView->setModel(model);
+    ui->tasksTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tasksTableView->verticalHeader()->hide();
     ui->tasksTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
@@ -31,7 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::openContextMenu(const QPoint &position)
 {
-    if (model->rowCount() == 0)
+    if (model->rowCount() == 0 || ui->tasksTableView->indexAt(position).row() < 0)
     {
         deleteAct->setEnabled(false);
         editAct->setEnabled(false);

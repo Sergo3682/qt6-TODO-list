@@ -23,6 +23,7 @@ public:
     Task getSelectedTask();
     void changeState(QModelIndex index);
     void saveTasksToFile();
+    void loadTasksFromFile();
 
 
 private:

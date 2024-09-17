@@ -13,9 +13,9 @@ class SaveLoadManager
 public:
     SaveLoadManager();
     void SaveToFile(QString filepath, QList<Task>& tasks);
-    void LoadFromFile(QList<Task>& tasks);
+    void LoadFromFile(QString filepath, QList<Task>& tasks);
     void CreateXMLfromTask(QDomElement& child, Task task);
-    Task CreateTaskFromXML();
+    Task CreateTaskFromXML(QDomElement& child);
 
 private:
     QString xmlbuffer;

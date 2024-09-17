@@ -29,7 +29,7 @@ QVariant TasksModel::data(const QModelIndex &index, int role) const
             case State:
                 return tasks[index.row()].isCompleted;
             case Date:
-                return tasks[index.row()].deadline;
+                return tasks[index.row()].deadline.toString(DATE_FORMAT);
             case Description:
                 return tasks[index.row()].description;
             default:
@@ -94,4 +94,10 @@ void TasksModel::saveTasksToFile()
 {
     SaveLoadManager Manager;
     Manager.SaveToFile("./MyTasks.xml", tasks);
+}
+
+void TasksModel::loadTasksFromFile()
+{
+    SaveLoadManager Manager;
+    Manager.LoadFromFile("./MyTasks.xml", tasks);
 }

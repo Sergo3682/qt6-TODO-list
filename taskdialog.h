@@ -3,6 +3,7 @@
 
 #include "task.h"
 #include <QDialog>
+#include <QMessageBox>
 
 namespace Ui {
 class TaskDialog;
