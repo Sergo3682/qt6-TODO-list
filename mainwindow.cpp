@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     initContextMenu();
     initToolBar();
+    loadFilterBox();
     connect(ui->tasksTableView, &QWidget::customContextMenuRequested,
         this, &MainWindow::openContextMenu);
 
@@ -74,6 +75,26 @@ void MainWindow::on_deleteActTriggered()
     model->deleteSelectedTask();
 }
 
+void MainWindow::loadFilterBox()
+{
+    ui->stateFilterBox->addItem("State");
+    ui->stateFilterBox->addItem("Done");
+    ui->stateFilterBox->addItem("In progress");
+    ui->stateFilterBox->setCurrentIndex(ui->stateFilterBox->findText("State"));
+    connect(ui->stateFilterBox, qOverload<int>(&QComboBox::activated), this, &MainWindow::on_stateFilterBoxActivated);
+
+    ui->dateFilterBox->addItem("Date");
+    ui->dateFilterBox->addItem("Custom range...");
+    ui->dateFilterBox->setCurrentIndex(ui->dateFilterBox->findText("Date"));
+    connect(ui->dateFilterBox, qOverload<int>(&QComboBox::activated), this, &MainWindow::on_dateFilterBoxActivated);
+
+    ui->nameFilterBox->addItem("Name");
+    ui->nameFilterBox->addItem("A-z");
+    ui->nameFilterBox->addItem("Z-a");
+    ui->nameFilterBox->setCurrentIndex(ui->nameFilterBox->findText("Name"));
+    connect(ui->nameFilterBox, qOverload<int>(&QComboBox::activated), this, &MainWindow::on_nameFilterBoxActivated);
+}
+
 void MainWindow::on_editActTriggered()
 {
     TaskDialog Dlg(model->getSelectedTask());
@@ -100,5 +121,75 @@ void MainWindow::on_tasksTableView_clicked(const QModelIndex &index)
 void MainWindow::on_saveActTriggered()
 {
     model->saveTasksToFile();
+}
+
+void MainWindow::on_dateFilterBoxActivated(int index)
+{
+    if (index == 0)
+    {
+        //clear filter
+    }
+
+    else if (index == 1)
+    {
+        DateTimeDialog Dlg;
+        if (Dlg.exec())
+        {
+            //filter
+        }
+        else
+        {
+            ui->dateFilterBox->setCurrentIndex(0);
+            //clear filter
+        }
+    }
+}
+
+void MainWindow::on_stateFilterBoxActivated(int index)
+{
+    switch (index)
+    {
+        case 0:
+        {
+            //reset filter
+            break;
+        }
+        case 1:
+        {
+            //set done filter
+            break;
+        }
+        case 2:
+        {
+            //set in progress filter
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void MainWindow::on_nameFilterBoxActivated(int index)
+{
+    switch (index)
+    {
+        case 0:
+        {
+            //reset filter
+            break;
+        }
+        case 1:
+        {
+            //set A-z filter
+            break;
+        }
+        case 2:
+        {
+            //set Z-a filter
+            break;
+        }
+        default:
+            break;
+    }
 }
 

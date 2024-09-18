@@ -5,6 +5,7 @@
 #include <QMenu>
 #include "tasksmodel.h"
 #include "taskdialog.h"
+#include "datetimedialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,9 +27,13 @@ private:
 
     void initContextMenu();
     void initToolBar();
+    void loadFilterBox();
 
 private slots:
     void openContextMenu(const QPoint&);
+    void on_dateFilterBoxActivated(int index);
+    void on_stateFilterBoxActivated(int index);
+    void on_nameFilterBoxActivated(int index);
     void on_deleteActTriggered();
     void on_editActTriggered();
     void on_addActTriggered();

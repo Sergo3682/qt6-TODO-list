@@ -44,8 +44,9 @@ else()
             tasksmodel.h tasksmodel.cpp
             task.h
             taskdialog.h taskdialog.cpp taskdialog.ui
-            tasks.xml
             saveloadmanager.h saveloadmanager.cpp
+            datetimedialog.h datetimedialog.cpp datetimedialog.ui
+
         )
     endif()
 endif()

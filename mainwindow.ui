@@ -27,21 +27,21 @@
        <item>
         <widget class="QComboBox" name="stateFilterBox">
          <property name="placeholderText">
-          <string>State</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QComboBox" name="dateFilterBox">
          <property name="placeholderText">
-          <string>Date</string>
+          <string/>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QComboBox" name="nameFilterBox">
          <property name="placeholderText">
-          <string>A-z</string>
+          <string/>
          </property>
         </widget>
        </item>
