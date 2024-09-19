@@ -46,6 +46,7 @@ else()
             taskdialog.h taskdialog.cpp taskdialog.ui
             saveloadmanager.h saveloadmanager.cpp
             datetimedialog.h datetimedialog.cpp datetimedialog.ui
+            tasksfilterproxy.h tasksfilterproxy.cpp
 
         )
     endif()

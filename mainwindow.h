@@ -6,6 +6,7 @@
 #include "tasksmodel.h"
 #include "taskdialog.h"
 #include "datetimedialog.h"
+#include "tasksfilterproxy.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,18 +23,19 @@ public:
 private:
     Ui::MainWindow *ui;
     TasksModel *model;
+    TasksFilterProxy *proxy;
     QMenu *contextMenu;
     QAction *addAct, *editAct, *deleteAct;
 
     void initContextMenu();
     void initToolBar();
-    void loadFilterBox();
+    void loadSortFilterBox();
 
 private slots:
     void openContextMenu(const QPoint&);
     void on_dateFilterBoxActivated(int index);
     void on_stateFilterBoxActivated(int index);
-    void on_nameFilterBoxActivated(int index);
+    void on_nameSortBoxActivated(int index);
     void on_deleteActTriggered();
     void on_editActTriggered();
     void on_addActTriggered();

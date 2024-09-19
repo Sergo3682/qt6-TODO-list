@@ -14,6 +14,11 @@ DateTimeDialog::~DateTimeDialog()
     delete ui;
 }
 
+std::tuple<QDateTime, QDateTime> DateTimeDialog::getCustomRange()
+{
+    return {ui->fromDateTimeEdit->dateTime(), ui->toDateTimeEdit->dateTime()};
+}
+
 void DateTimeDialog::on_okPushButton_clicked()
 {
     if (ui->fromDateTimeEdit->dateTime() > ui->toDateTimeEdit->dateTime())

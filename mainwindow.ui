@@ -39,7 +39,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="nameFilterBox">
+        <widget class="QComboBox" name="nameSortBox">
          <property name="placeholderText">
           <string/>
          </property>

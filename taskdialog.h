@@ -25,6 +25,7 @@ private slots:
 
 private:
     Ui::TaskDialog *ui;
+    bool currentState = false;
 };
 
 #endif // TASKDIALOG_H

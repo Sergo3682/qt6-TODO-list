@@ -16,6 +16,7 @@ TaskDialog::TaskDialog(Task selectedTask) :
     ui->nameLineEdit->setText(selectedTask.name);
     ui->descriptionTextEdit->setPlainText(selectedTask.description);
     ui->dateTimeEdit->setDateTime(selectedTask.deadline);
+    currentState = selectedTask.isCompleted;
 }
 
 TaskDialog::~TaskDialog()
@@ -29,6 +30,7 @@ Task TaskDialog::getTaskFromFields()
     tmpTask.name = ui->nameLineEdit->text();
     tmpTask.description = ui->descriptionTextEdit->toPlainText();
     tmpTask.deadline = ui->dateTimeEdit->dateTime();
+    tmpTask.isCompleted = currentState;
     return tmpTask;
 }
 

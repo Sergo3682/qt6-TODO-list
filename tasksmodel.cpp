@@ -20,20 +20,32 @@ QVariant TasksModel::data(const QModelIndex &index, int role) const
         return tasks[index.row()].isCompleted;
     }
 
-    if (role == Qt::DisplayRole)
+    if (role == Qt::UserRole)
     {
         switch (index.column())
         {
             case Name:
                 return tasks[index.row()].name;
             case State:
-                return tasks[index.row()].isCompleted;
+                return tasks[index.row()].isCompleted ? "true" : "false";
+            case Date:
+                return tasks[index.row()].deadline;
+            case Description:
+                return tasks[index.row()].description;
+            default:
+                 return "Empty";
+        }
+    }
+    if (role == Qt::DisplayRole)
+    {
+        switch (index.column())
+        {
+            case Name:
+                return tasks[index.row()].name;
             case Date:
                 return tasks[index.row()].deadline.toString(DATE_FORMAT);
             case Description:
                 return tasks[index.row()].description;
-            default:
-                return "Empty";
         }
     }
 
@@ -54,31 +66,29 @@ int TasksModel::columnCount(const QModelIndex &parent) const
     return COLUMNS_NUMBER;
 }
 
-void TasksModel::setCurrentIndex(QModelIndex here)
+void TasksModel::deleteTask(QModelIndex index)
 {
-    currentIndex = here;
-}
-
-void TasksModel::deleteSelectedTask()
-{
-    tasks.removeAt(currentIndex.row());
-    emit layoutChanged();
+    beginRemoveRows(QModelIndex(), index.row(), index.row());
+    tasks.removeAt(index.row());
+    removeRow(index.row());
+    endRemoveRows();
 }
 
 void TasksModel::addTask(Task tmpTask)
 {
+    beginInsertRows(QModelIndex(), tasks.size()-1, tasks.size()-1);
     tasks.append(tmpTask);
-    emit layoutChanged();
+    endInsertRows();
 }
 
-void TasksModel::editTask(Task tmpTask)
+void TasksModel::editTask(QModelIndex index, Task tmpTask)
 {
-    tasks[currentIndex.row()] = tmpTask;
+    tasks[index.row()] = tmpTask;
 }
 
-Task TasksModel::getSelectedTask()
+Task TasksModel::getTask(QModelIndex index)
 {
-    return tasks[currentIndex.row()];
+    return tasks[index.row()];
 }
 
 void TasksModel::changeState(QModelIndex index)
@@ -86,7 +96,6 @@ void TasksModel::changeState(QModelIndex index)
     if (index.column() == State)
     {
         tasks[index.row()].isCompleted = !tasks[index.row()].isCompleted;
-        emit layoutChanged();
     }
 }
 
