@@ -16,15 +16,13 @@ MainWindow::MainWindow(QWidget *parent)
     loadSortFilterBox();
     connect(ui->tasksTableView, &QWidget::customContextMenuRequested,
         this, &MainWindow::openContextMenu);
-
     model->loadTasksFromFile();
-
     ui->tasksTableView->setModel(proxy);
     ui->tasksTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tasksTableView->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tasksTableView->verticalHeader()->hide();
     ui->tasksTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tasksTableView->horizontalHeader()->setSectionResizeMode(TasksModel::State, QHeaderView::ResizeToContents);
-
     emit ui->nameSortBox->activated(0);
 }
 
@@ -116,9 +114,6 @@ void MainWindow::on_addActTriggered()
     if (Dlg.exec())
     {
         model->addTask(Dlg.getTaskFromFields());
-
-        int currentStateFilter = ui->stateFilterBox->currentIndex();
-        emit ui->stateFilterBox->activated(currentStateFilter);
     }
 }
 
@@ -127,7 +122,7 @@ void MainWindow::on_tasksTableView_clicked(const QModelIndex &index)
     proxy->setCurrentIndex(index);
     model->changeState(proxy->getCurrenSourceIndex());
     emit proxy->layoutChanged();
-    on_stateFilterBoxActivated(ui->stateFilterBox->currentIndex());
+    emit ui->stateFilterBox->setCurrentIndex(ui->stateFilterBox->currentIndex());
 }
 
 void MainWindow::on_saveActTriggered()
@@ -139,7 +134,7 @@ void MainWindow::on_dateFilterBoxActivated(int index)
 {
     if (index == 0)
     {
-        //clear filter
+        proxy->clearFilters(ui->stateFilterBox->currentIndex(),0,ui->searchBar->text().size());
     }
     else if (index == 1)
     {
@@ -147,12 +142,10 @@ void MainWindow::on_dateFilterBoxActivated(int index)
         if (Dlg.exec())
         {
             proxy->filterDate(Dlg.getCustomRange());
-            //filter
         }
         else
         {
             ui->dateFilterBox->setCurrentIndex(0);
-            //clear filter
         }
     }
 }
@@ -165,5 +158,19 @@ void MainWindow::on_stateFilterBoxActivated(int index)
 void MainWindow::on_nameSortBoxActivated(int index)
 {
     proxy->sortName(index);
+}
+
+void MainWindow::on_searchButton_clicked()
+{
+    proxy->filterDescription(ui->searchBar->text());
+}
+
+void MainWindow::on_clearButton_clicked()
+{
+    proxy->clearFilters(0,0,0);
+    ui->stateFilterBox->setCurrentIndex(0);
+    ui->dateFilterBox->setCurrentIndex(0);
+    ui->nameSortBox->setCurrentIndex(0);
+    ui->searchBar->clear();
 }
 

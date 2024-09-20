@@ -42,5 +42,7 @@ private slots:
     void on_saveActTriggered();
 
     void on_tasksTableView_clicked(const QModelIndex &index);
+    void on_searchButton_clicked();
+    void on_clearButton_clicked();
 };
 #endif // MAINWINDOW_H

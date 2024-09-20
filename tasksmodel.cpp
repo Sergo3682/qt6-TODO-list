@@ -76,7 +76,7 @@ void TasksModel::deleteTask(QModelIndex index)
 
 void TasksModel::addTask(Task tmpTask)
 {
-    beginInsertRows(QModelIndex(), tasks.size()-1, tasks.size()-1);
+    beginInsertRows(QModelIndex(), tasks.size(), tasks.size());
     tasks.append(tmpTask);
     endInsertRows();
 }

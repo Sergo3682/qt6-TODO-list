@@ -16,7 +16,7 @@ public:
     explicit DateTimeDialog(QWidget *parent = nullptr);
     // QDateTime getFromDateTime();
     // QDateTime getToDateTime();
-    std::tuple<QDateTime, QDateTime> getCustomRange();
+    QList<QDateTime> getCustomRange();
     ~DateTimeDialog();
 
 private slots:

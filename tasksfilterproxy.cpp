@@ -13,28 +13,15 @@ TasksFilterProxy::TasksFilterProxy(TasksModel *model)
 
 void TasksFilterProxy::filterState(int &index)
 {
-    this->setFilterKeyColumn(TasksModel::State);
-    switch (index)
-    {
-        case All:
-        {
-            this->setFilterRegularExpression(QRegularExpression("true|false", QRegularExpression::CaseInsensitiveOption));
-            break;
-        }
-        case Done:
-        {
-            this->setFilterRegularExpression(QRegularExpression("true", QRegularExpression::CaseInsensitiveOption));
-            break;
-        }
-        case InProgress:
-        {
-            this->setFilterRegularExpression(QRegularExpression("false", QRegularExpression::CaseInsensitiveOption));
-            break;
-        }
-        default:
-            break;
-    }
-    emit layoutChanged();
+    is_filterState = index;
+    invalidateFilter();
+}
+
+void TasksFilterProxy::filterDescription(QString searchEntry)
+{
+    is_filterDesc = true;
+    this->searchEntry = searchEntry;
+    invalidateFilter();
 }
 
 void TasksFilterProxy::sortName(int &index)
@@ -67,9 +54,52 @@ QModelIndex TasksFilterProxy::getCurrenSourceIndex()
     return mapToSource(currentIndex);
 }
 
-void TasksFilterProxy::filterDate(std::tuple<QDateTime, QDateTime> CustomRange)
+void TasksFilterProxy::filterDate(QList<QDateTime> CustomRange)
 {
     is_filterDate = true;
     this->CustomRange = CustomRange;
+    this->invalidateFilter();
+}
 
+void TasksFilterProxy::clearFilters(int state, bool date, bool desc)
+{
+    is_filterState = state;
+    is_filterDate = date;
+    is_filterDesc = desc;
+    invalidateFilter();
+}
+
+bool TasksFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    bool result = true;
+    if(is_filterState)
+    {
+        QModelIndex index = sourceModel()->index(sourceRow, TasksModel::State, sourceParent);
+        if (is_filterState == Done)
+        {
+            result = index.data(Qt::UserRole).value<bool>();
+        }
+        else
+        {
+            result = !(index.data(Qt::UserRole).value<bool>());
+        }
+        if (!result)
+            return result;
+    }
+    if (is_filterDate)
+    {
+        QModelIndex index = sourceModel()->index(sourceRow, TasksModel::Date, sourceParent);
+        result = index.data(Qt::UserRole).value<QDateTime>() >= CustomRange[0] && index.data(Qt::UserRole).value<QDateTime>() <= CustomRange[1];
+        if (!result)
+            return result;
+    }
+    if (is_filterDesc)
+    {
+        QModelIndex index = sourceModel()->index(sourceRow, TasksModel::Description, sourceParent);
+        QString description = index.data(Qt::UserRole).value<QString>();
+        result = description.contains(searchEntry);
+        if (!result)
+            return result;
+    }
+    return result;
 }
